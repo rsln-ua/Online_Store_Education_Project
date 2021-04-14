@@ -1,0 +1,112 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    background-color: transparent;
+    outline: none;
+}
+input{
+    border: none;
+    /* border-top: black solid 1px;
+    border-bottom: black solid 1px; */
+}
+#root{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+main{
+    flex-grow: 1;
+    position: relative;
+}
+main > *{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+.auth-container{
+    background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover !important;
+    padding: 3em;
+}
+.auth-jumb{
+    opacity: 0.8;
+}
+header img{
+    margin: 0 15px;
+}
+.good-card{
+    width: 18rem;
+    height: 24rem;
+    overflow: hidden;
+}
+.good-card .card-img-top{
+    height: 12rem;
+}
+.good-card img{
+    object-fit: contain;   
+}
+.test{
+    background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.9), white );
+}
+.category-card .card-header a{
+    color:  #fff;
+}
+.counter{
+    font-family: 'Roboto Mono', monospace;
+    text-align: center;
+}
+
+.good-p h4{
+    display: inline;
+    margin-right: 1rem;
+}
+.good-p input{
+    width: 2.5rem;
+}
+
+
+.good-page img{
+    height: 80vh;
+    object-fit: contain;   
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon{
+    background-color: black !important;
+    border-radius: 5px;
+    padding: 1.5rem;
+}
+
+.arrow {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    /* fill: #fff; */
+    fill: #000;
+    cursor: pointer;
+}
+.arrow--left {
+    right: 100%;
+}
+.arrow--right {
+    left: 100%;
+}
+.arrow--disabled {
+fill: rgba(255, 255, 255, 0.5);
+}
+#dropdown-basic::after{
+    content: none;
+}
