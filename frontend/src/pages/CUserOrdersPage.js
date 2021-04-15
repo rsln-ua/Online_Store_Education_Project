@@ -2,8 +2,7 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom";
 import { Container, Table, Alert } from "react-bootstrap"
 import { connect } from "react-redux"
-import { query } from "../graphql"
-import {actionDataGetter} from "../redux/actionCreater"
+import { actionGetUser } from "../redux/actionCreater"
 
 const Order = ({order}) =>
 <tr>
@@ -12,9 +11,9 @@ const Order = ({order}) =>
     <td>{(new Date(+order.created)).toLocaleDateString()}</td>
 </tr>
 
-const UserOrdersPage = ({ state: {getUser: orders}, DataGetter }) => {
+const UserOrdersPage = ({ state: {getUser: orders}, actionGetUser }) => {
     useEffect(
-        () => DataGetter(query.getUser), []
+        () => actionGetUser(), []
     )
     return  <Container>
         {
@@ -40,4 +39,4 @@ const UserOrdersPage = ({ state: {getUser: orders}, DataGetter }) => {
 }
 
 
-export const CUserOrdersPage = connect(state => ({state: state.promise}), {DataGetter: actionDataGetter})(UserOrdersPage)
+export const CUserOrdersPage = connect(state => ({state: state.promise}), {actionGetUser})(UserOrdersPage)

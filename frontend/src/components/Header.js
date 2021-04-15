@@ -50,29 +50,12 @@ const Header = () =>
       <Col>
         <Nav className="mr-auto">
           <Navbar.Brand>Super-Store</Navbar.Brand>
-          {/* <Nav.Link as={Link} to="/">Home</Nav.Link> */}
           <Nav.Link as={Link} to="/categories">Categories</Nav.Link>
         </Nav>
       </Col>
-      <Col xs={6} md={3} lg={5}>
-        <InputGroup className="">
-        <FormControl
-          placeholder="Введите название товара"
-        />
-        <InputGroup.Append>
-        <Button variant="outline-success">Поиск</Button>
-        </InputGroup.Append>
-        </InputGroup>
-      </Col>
-      <Col className="d-flex justify-content-around">
-      <CLink/>
-        
-
-      <CUserOptions/>
-
-
-
-
+      <Col xs={3} className="d-flex justify-content-around">
+        <CLink/>
+        <CUserOptions/>
       </Col>
     </Container>
   </Navbar.Collapse>

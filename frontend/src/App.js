@@ -48,7 +48,7 @@ function App({state: {status}}) {
         </Spinner> 
       }
 
-      <main>
+      <main className="overflow-scroll">
         <Switch>
             <CPrivateRoute path="/admin" roles={[admin]} component={AdminRouting}/>
             <CPrivateRoute path="/" roles={[user, vasyaPupkin]} exact component={CCategoriesPage}/>

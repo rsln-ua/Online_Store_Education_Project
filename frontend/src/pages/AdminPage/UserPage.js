@@ -1,15 +1,13 @@
 import { useEffect } from "react"
 import { connect } from "react-redux"
-import { query } from "../../graphql"
-import { actionDataGetter } from "../../redux/actionCreater"
+import { actionGetUserById } from "../../redux/actionCreater"
 
-const UserPage = ({state: {getUserById: userINfo}, dataGetter, match}) => {
-    console.log('пришло')
+const UserPage = ({state: {getUserById: userINfo}, actionGetUserById, match}) => {
 
     useEffect(
-        () => dataGetter(query.getUserById, match.params), []
+        () => actionGetUserById(match.params), []
     )
 
     return <h2>{JSON.stringify(userINfo)}))</h2>
 }
-export const CUserPage = connect(state => ({state: state.promise}), {dataGetter: actionDataGetter})(UserPage)
+export const CUserPage = connect(state => ({state: state.promise}), {actionGetUserById})(UserPage)

@@ -10,8 +10,9 @@ export function myFetch(query, variables={}){
     }).then(res => res.json()).then(
       res => {
         if("errors" in res){
-          alert(res.errors.map(e => e.message))
-          throw new Error('Хьюстон, у нас проблемы....')
+          // alert(res.errors.map(e => e.message))
+          // throw new Error('Хьюстон, у нас проблемы....')
+          throw new Error(res.errors.map(e => e.message))
         }
         return res
       } 

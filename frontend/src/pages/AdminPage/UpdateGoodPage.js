@@ -2,8 +2,7 @@ import { useEffect, useState } from "react"
 import { Container, FormControl, InputGroup, Form, Col, Button, Figure } from "react-bootstrap"
 import { connect } from "react-redux"
 import { history } from "../../index"
-import { mutation, query } from "../../graphql"
-import { actionDataGetter, actionDataSender } from "../../redux/actionCreater"
+import { actionGetGood, actionUpdateGood } from "../../redux/actionCreater"
 
 const Image = ({url, remove}) => {
   return <Figure className="m-1 position-relative">
@@ -16,7 +15,7 @@ const Image = ({url, remove}) => {
 </Figure>
 }
 
-export const GoodForm = ({state: {getGood}, actionDataSender, actionDataGetter, match}) => {
+export const GoodForm = ({state: {getGood}, actionUpdateGood, actionGetGood, match}) => {
 
   const [name, setName] = useState()
   const [price, setPrice] = useState()
@@ -25,7 +24,7 @@ export const GoodForm = ({state: {getGood}, actionDataSender, actionDataGetter, 
   const [images, setImages] = useState()
 
   useEffect(
-    () => actionDataGetter(query.getGood, match.params), []
+    () => actionGetGood(match.params), []
   )
   useEffect(
     () => {
@@ -57,7 +56,7 @@ export const GoodForm = ({state: {getGood}, actionDataSender, actionDataGetter, 
         body: fd
       }).then(res => res.json())
     }
-    actionDataSender(mutation.updateGood, {id: getGood.id, name: name, price: +price, img: images.concat(newImages), des: description, quantity: quantity}, history.goBack, alert)
+    actionUpdateGood({id: getGood.id, name: name, price: +price, img: images.concat(newImages), des: description, quantity: quantity})
   }
 
 return <Container className="py-5"> 
@@ -95,7 +94,7 @@ return <Container className="py-5">
     <FormControl as="textarea" aria-label="With textarea" value={description} onChange={(e => setDescription(e.target.value))}/>
   </InputGroup>
 
-  <Form.File multiple id="test" label="" name="img"/>
+  <Form.File multiple accept=".png, .jpg, .jpeg" id="test" label="" name="img"/>
   <div className="p-2">
     {
       images?.map(
@@ -107,10 +106,10 @@ return <Container className="py-5">
 
   <div className="d-flex justify-content-end">
     <Button variant="danger" onClick={() => history.goBack()}>Отмена</Button>
-    <Button variant="success" onClick={updateGoodInfo}>Отправить</Button>
+    <Button variant="success" disabled={name === "" || price === ""} onClick={updateGoodInfo}>Отправить</Button>
   </div>
 
 </Container>
 }
 
-export const UpdateGoodPage = connect(state => ({state: state.promise}), {actionDataSender, actionDataGetter})(GoodForm)
+export const UpdateGoodPage = connect(state => ({state: state.promise}), {actionUpdateGood, actionGetGood})(GoodForm)

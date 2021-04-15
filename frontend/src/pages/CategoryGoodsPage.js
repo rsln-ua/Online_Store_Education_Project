@@ -1,21 +1,21 @@
 import { useEffect } from "react"
-import { Container, Spinner } from "react-bootstrap"
+import { Container } from "react-bootstrap"
 import { connect } from "react-redux"
 import { CGoodCard } from "../components/GoodCard"
-import { query } from "../graphql"
-import { actionDataGetter } from "../redux/actionCreater"
+import { actionGetGoodsByCategory } from "../redux/actionCreater"
 
 
-const CategoryGoodsPage = ({match, state: {getCategoryById={}, status}, dataGetter}) => {
+const CategoryGoodsPage = ({match, state: {getCategoryById={}, status}, actionGetGoodsByCategory}) => {
     const {goods} = getCategoryById
     useEffect(
-        () => dataGetter(query.getCategoryById, match.params), []
+        () => actionGetGoodsByCategory(match.params), []
     )
     return <Container className="p-5 d-flex flex-wrap">
             {
-                goods?.map(g => <CGoodCard good={g} cN="w-25"/>)
+                goods?.map(g => <CGoodCard good={g} key={g.id}/>)
+                // goods?.map(g => <CGoodCard good={g} cN="w-25" key={g.id}/>)
             }
     </Container>
 }
 
-export const CCategoryGoodsPage = connect(state => ({state: state.promise}), {dataGetter: actionDataGetter})(CategoryGoodsPage)
+export const CCategoryGoodsPage = connect(state => ({state: state.promise}), {actionGetGoodsByCategory})(CategoryGoodsPage)

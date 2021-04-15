@@ -1,8 +1,9 @@
 const {models} = require('./model')
 const { sign } = require('jsonwebtoken');
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
+const salt = bcrypt.genSaltSync(10)
 const key = 'key'
-
 
 const root = {
 
@@ -55,7 +56,6 @@ const root = {
 
         const removed = await models.Category.findByIdAndDelete(id)
         await models.Good.deleteMany({category: mongoose.Types.ObjectId(id)})
-        console.log(removed.goods)
         return JSON.stringify(removed.goods)
     },
     getUsers: async ({}, {user}) => {
@@ -77,7 +77,7 @@ const root = {
 
         return await models.Order.find().populate('good').populate('user')
     },
-    registerAdmin: async ({login, password}, {user}) => {z
+    registerAdmin: async ({login, password}, {user}) => {
         if(!user || !user.isAdmin)
         throw new Error('Гуляй Вася.')
 
@@ -87,7 +87,7 @@ const root = {
         if(await models.User.findOne({login: login}))
         throw new Error('login занят.')
 
-        let newAdmin= await new models.User ({login, password, isAdmin: true})
+        let newAdmin= await new models.User ({login, password: bcrypt.hashSync(password, salt), isAdmin: true})
         newAdmin.save()
 
         return (!!newAdmin)
@@ -176,14 +176,17 @@ const root = {
         throw new Error('login занят.')
         if(login == '' || password == '')
         throw new Error('Пустая строка.')
-        let newUser = await new models.User ({login, password})
+        let newUser = await new models.User ({login, password: bcrypt.hashSync(password, salt)})
         newUser.save()
         return JSON.stringify('Регистрация прошла успешно.')
     },
     login: async({login, password}) => {
-        let user = await models.User.findOne({login: login, password: password})
+        let user = await models.User.findOne({login: login})
         if(!user)
         throw new Error("Пользователь не найден")
+
+        if(!bcrypt.compareSync(password, user.password))
+        throw new Error("Не верный пароль")
 
         return sign({sub: {id: user._id, login: user.login, role: user.isAdmin ? "admin" : "user"}}, key)
     }

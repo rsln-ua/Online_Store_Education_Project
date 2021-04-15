@@ -1,10 +1,8 @@
 import { connect } from 'react-redux'
-import { Button, ButtonGroup, Container, ListGroup, Spinner, Table } from "react-bootstrap"
+import { Button, ButtonGroup, Container, ListGroup} from "react-bootstrap"
 import { Link } from "react-router-dom"
-import { actionChangeGood, actionClearCart, actionDataGetter, actionDataSender, actionLogin } from '../redux/actionCreater'
-import { useEffect, useState } from 'react'
-import { mutation, query } from '../graphql'
-import { myFetch } from '../myFetch'
+import { actionChangeGood, actionClearCart, actionTotalPrice, actionCreateOrder} from '../redux/actionCreater'
+import { useEffect } from 'react'
 
 const Counter = ({id, count, actionChangeGood}) =>{
     const setCount = (count) => actionChangeGood(id, count) 
@@ -19,7 +17,7 @@ const CCounter = connect(null, {actionChangeGood})(Counter)
 
 const GoodLi = ({good}) => 
 <ListGroup.Item action className="d-flex justify-content-between good-p">
-    <Link to="/">
+    <Link to={`/good/${good.id}`}>
         {
             good.name
         }
@@ -31,17 +29,17 @@ const GoodLi = ({good}) =>
 </ListGroup.Item>
 
 
-const CartPage = ({cart, promise, actionClearCart, actionDataSender, DataGetter}) =>{
+const CartPage = ({cart, promise, actionClearCart, actionCreateOrder, actionTotalPrice}) =>{
     useEffect(
-        () => DataGetter(query.totalPrice, {goods: JSON.stringify(cart.goods)}), [cart]
+        () => actionTotalPrice({goods: JSON.stringify(cart.goods)}), [cart]
     )
     const handlerCreateOrder = () => {
         if(!cart.goods){
             alert('Корзина пустая!!')
             return
         }
-    const goods = JSON.stringify(cart.goods)
-    actionDataSender(mutation.createOrder, {goods: goods}, actionClearCart, e => alert(e))
+        const goods = JSON.stringify(cart.goods)
+        actionCreateOrder({goods: goods})
     }
     return (
         <Container>
@@ -62,4 +60,4 @@ const CartPage = ({cart, promise, actionClearCart, actionDataSender, DataGetter}
     )
 }
 
-export const CCartPage = connect(state => ({cart: state.cart, promise: state.promise}),{actionClearCart, actionDataSender, DataGetter: actionDataGetter})(CartPage)
+export const CCartPage = connect(state => ({cart: state.cart, promise: state.promise}),{actionClearCart, actionCreateOrder, actionTotalPrice})(CartPage)

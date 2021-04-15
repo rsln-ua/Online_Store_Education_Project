@@ -48,6 +48,7 @@ header img{
 .good-card{
     width: 18rem;
     height: 24rem;
+    height: 500px;
     overflow: hidden;
 }
 .good-card .card-img-top{
@@ -67,6 +68,26 @@ header img{
     text-align: center;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .good-p h4{
     display: inline;
     margin-right: 1rem;
@@ -74,8 +95,6 @@ header img{
 .good-p input{
     width: 2.5rem;
 }
-
-
 .good-page img{
     height: 80vh;
     object-fit: contain;   

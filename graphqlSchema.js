@@ -21,7 +21,7 @@ type Mutation {
     registerAdmin(login: String!, password: String!) : String
     register(login: String!, password: String!) : String
     createOrder(goods: String) : Order
-    updateGood(id: String!, name: String, price: Int, img: [String], description: String, quantity: Int) : Good
+    updateGood(id: String!, name: String!, price: Int!, img: [String], description: String, quantity: Int) : Good
     addGood2Cart(id: String!) : GoodOrder
     removeCategory(id: String!) : String
     removeGood(id: String!) : String

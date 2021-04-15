@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { Form, Button, Jumbotron, Container, ButtonGroup, Alert } from 'react-bootstrap'
+import { Form, Button, Jumbotron, Container, ButtonGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { actionLogin, actionDataSender } from '../redux/actionCreater'
-import { mutation, query } from '../graphql'
+import { actionRegister, actionAuthorize } from '../redux/actionCreater'
 
-const AuthPage = ({state: {status}, actionLogin, actionDataSender}) => {
+const AuthPage = ({actionAuthorize, actionRegister}) => {
 
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
@@ -25,13 +24,15 @@ const AuthPage = ({state: {status}, actionLogin, actionDataSender}) => {
                 </Form.Group>
 
                 <ButtonGroup className="mr-2" aria-label="First group">
-                    <Button variant="primary" onClick={() => actionDataSender(query.login, {login, password}, actionLogin)}>
+                    <Button variant="primary" disabled={login.length < 4 || password.length < 4} 
+                    onClick={() => actionAuthorize({login, password})}>
                         Войти
                     </Button>
                 </ButtonGroup>
 
                 <ButtonGroup className="mr-2" aria-label="Second group">
-                    <Button variant="success" onClick={() => actionDataSender(mutation.signin, {login, password}, () => alert("Регистрация прошла успешно."))}>
+                    <Button variant="success" disabled={login.length < 4 || password.length < 4} 
+                        onClick={() => actionRegister({login, password})}>
                         Регистрация
                     </Button>
                 </ButtonGroup>
@@ -41,4 +42,4 @@ const AuthPage = ({state: {status}, actionLogin, actionDataSender}) => {
 </Container>
 )}
 
-export const CAuthPage = connect( state => ({state: state.auth}), { actionLogin, actionDataSender })(AuthPage)
+export const CAuthPage = connect( null , {actionAuthorize, actionRegister})(AuthPage)

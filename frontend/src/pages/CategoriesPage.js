@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Card, CardColumns, Container, ListGroup, Spinner } from "react-bootstrap"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
-import {categories, colors} from "../testBD"
-import {myFetch} from '../myFetch'
-import {query} from '../graphql'
-import { actionDataGetter } from "../redux/actionCreater"
+import { colors } from "../testBD"
+import { query } from '../graphql'
+import { actionGetCategories } from "../redux/actionCreater"
 
 const Category = ({category, color = ''}) => {
     return(
@@ -28,10 +27,10 @@ const Category = ({category, color = ''}) => {
 }
 
 
-const CategoriesPage = ({state: {getCategories: categories}, dataGetter}) => {
+const CategoriesPage = ({state: {getCategories: categories}, actionGetCategories}) => {
     let i = 0
     useEffect(
-        () => dataGetter(query.getCategories), []
+        () => actionGetCategories(query.getCategories), []
     )
 
     return (
@@ -51,4 +50,4 @@ const CategoriesPage = ({state: {getCategories: categories}, dataGetter}) => {
     )
 }
 
-export const CCategoriesPage = connect(state => ({state: state.promise}), {dataGetter: actionDataGetter})(CategoriesPage)
+export const CCategoriesPage = connect(state => ({state: state.promise}), {actionGetCategories})(CategoriesPage)

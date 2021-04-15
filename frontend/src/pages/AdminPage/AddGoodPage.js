@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { Container, FormControl, InputGroup, Form, Col, Figure, Button } from "react-bootstrap"
 import { connect } from "react-redux"
-import { history } from "../../index"
-import { mutation, query } from "../../graphql"
-import { actionDataGetter, actionDataSender } from "../../redux/actionCreater"
+import { actionGetCategories, actionAddGood } from "../../redux/actionCreater"
 
 
-const ListCategories = ({state: {getCategories: categories}, actionDataGetter, val, setVal}) => {
+const ListCategories = ({state: {getCategories: categories}, actionGetCategories, val, setVal}) => {
     useEffect( 
-        () =>  actionDataGetter(query.getCategories), []
+        () =>  actionGetCategories(), []
     )
 
     return <Form.Control as="select" onChange={(e => setVal(e.target.value))}>
@@ -19,9 +17,9 @@ const ListCategories = ({state: {getCategories: categories}, actionDataGetter, v
     </Form.Control>
 }
 
-const CListCategories = connect(state => ({state: state.promise}), {actionDataGetter})(ListCategories)
+const CListCategories = connect(state => ({state: state.promise}), {actionGetCategories})(ListCategories)
 
-export const TAddGoodPage = ({actionDataSender}) => {
+export const TAddGoodPage = ({actionAddGood}) => {
 
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
@@ -48,7 +46,7 @@ export const TAddGoodPage = ({actionDataSender}) => {
         body: fd
       }).then(res => res.json())
     }
-    actionDataSender(mutation.addGood, {name: name, price: +price, category: category, img: images, des: description}, history.goBack)
+    actionAddGood({name: name, price: +price, category: category, img: images, des: description})
   }
 
 return <Container className="py-5">
@@ -79,13 +77,13 @@ return <Container className="py-5">
     <FormControl as="textarea" aria-label="With textarea" value={description} onChange={(e => setDescription(e.target.value))}/>
   </InputGroup>
 
-  <Form.File multiple id="test" label="" name="img"/>
+  <Form.File multiple accept=".png, .jpg, .jpeg" id="test" label="" name="img"/>
 
   <div className="d-flex justify-content-end">
-    <Button onClick={sendGood}>Отправить</Button>
+    <Button onClick={sendGood}  disabled={name === "" || price === "" || category === ""} >Отправить</Button>
   </div>
 
 </Container>
 }
 
-export const AddGoodPage = connect(state => ({state: state.promise}), {actionDataSender})(TAddGoodPage)
+export const AddGoodPage = connect(state => ({state: state.promise}), {actionAddGood})(TAddGoodPage)

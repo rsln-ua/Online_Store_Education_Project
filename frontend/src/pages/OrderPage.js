@@ -1,8 +1,7 @@
 import { useEffect } from "react"
 import { Container, Table } from "react-bootstrap"
 import { connect } from "react-redux"
-import { query } from "../graphql"
-import { actionDataGetter } from "../redux/actionCreater"
+import { actionGetOrder } from "../redux/actionCreater"
 
 const GoodTr = ({good}) =>
 <tr>
@@ -11,10 +10,10 @@ const GoodTr = ({good}) =>
     <td>{good.price}</td>
 </tr>
 
-const OrderPage = ({state: {getOrder: order}, dataGetter, match}) => {
+const OrderPage = ({state: {getOrder: order}, actionGetOrder, match}) => {
 
     useEffect(
-        () => dataGetter(query.getOrder, match.params), []
+        () => actionGetOrder(match.params), []
     )
 
     return <Container>
@@ -35,4 +34,4 @@ const OrderPage = ({state: {getOrder: order}, dataGetter, match}) => {
     </Container>
 }
 
-export const COrderPage = connect(state => ({state: state.promise}), {dataGetter: actionDataGetter})(OrderPage)
+export const COrderPage = connect(state => ({state: state.promise}), {actionGetOrder})(OrderPage)

@@ -3,21 +3,22 @@ import { Link } from "react-router-dom";
 import { Container, Table, Alert } from "react-bootstrap"
 import { connect } from "react-redux"
 import { query } from "../../graphql"
-import {actionDataGetter} from "../../redux/actionCreater"
+import {actionGetOrders} from "../../redux/actionCreater"
 
 const Order = ({order}) =>
 <tr>
-    <td><Link to={`/user/${order.user.id}`}>{order.user.id}</Link></td>
+    <td><Link to={`/user/${order.user?.id}`}>{order.user?.id}</Link></td>
     <td><Link to={`/order/${order.id}`}>{order.id}</Link></td>
     <td>{order.total}</td>
     <td>{(new Date(+order.created)).toLocaleDateString()}</td>
 </tr>
 
-const OrdersPage = ({ state: {getOrders: orders}, DataGetter }) => {
+const OrdersPage = ({ state: {getOrders: orders}, actionGetOrders }) => {
     useEffect(
-        () => DataGetter(query.getOrders), []
+        () => actionGetOrders(query.getOrders), []
     )
-    return  <Container>
+    console.log(orders)
+    return  <Container >
         {
         orders && orders.length != 0  ?
          <Table>
@@ -36,9 +37,9 @@ const OrdersPage = ({ state: {getOrders: orders}, DataGetter }) => {
              </tbody>
          </Table>
          :
-         <Alert variant="warning">Здесь пока ничего нет, сделайте заказ</Alert>
+         <Alert variant="warning">Здесь пока ничего нет</Alert>
         }
     </Container>
 }
 
-export const COrdersPage = connect(state => ({state: state.promise}), {DataGetter: actionDataGetter})(OrdersPage)
+export const COrdersPage = connect(state => ({state: state.promise}), {actionGetOrders})(OrdersPage)

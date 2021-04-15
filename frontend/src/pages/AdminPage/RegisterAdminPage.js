@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { Form, Button, Jumbotron, Container, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { actionLogin, actionDataSender } from '../../redux/actionCreater'
-import { history } from '../../App'
+import { actionRegisterAdmin } from '../../redux/actionCreater'
 import { mutation } from '../../graphql'
 import { AUTHORIZED, LOGIN_FAILED } from '../../redux/action'
 import { Redirect } from 'react-router'
 
-const AuthForm = ({actionDataSender}) => {
+const AuthForm = ({actionRegisterAdmin}) => {
 
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
@@ -28,8 +27,8 @@ const AuthForm = ({actionDataSender}) => {
                 </Form.Group>
 
                 <ButtonGroup className="mr-2">
-                    <Button variant="success" onClick={() => 
-                    actionDataSender(mutation.registerAdmin, {login, password}, () => alert("admin зарегистрирован"))}>
+                    <Button variant="success" disabled={login.length < 6 || password.length < 8} onClick={() => 
+                    actionRegisterAdmin({login, password})}>
                         Регистрация
                     </Button>
                 </ButtonGroup>
@@ -39,4 +38,4 @@ const AuthForm = ({actionDataSender}) => {
 </Container>
 )}
 
-export const RegisterAdminPage = connect( state => ({state: state.promise}) ,{actionDataSender})(AuthForm)
+export const RegisterAdminPage = connect( state => ({state: state.promise}) ,{actionRegisterAdmin})(AuthForm)

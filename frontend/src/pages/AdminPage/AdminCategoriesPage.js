@@ -1,8 +1,7 @@
 import { useEffect } from "react"
 import { Container, ListGroup, Alert, Button } from "react-bootstrap"
 import { connect } from "react-redux"
-import { mutation, query } from "../../graphql"
-import {actionDataGetter, actionDataSender} from "../../redux/actionCreater"
+import {actionGetCategories, actionRemoveCategory, actionAddCategory} from "../../redux/actionCreater"
 
 const Category = ({category, remove}) =>
 <tr>
@@ -14,15 +13,15 @@ const Category = ({category, remove}) =>
   </ListGroup.Item>
 </tr>
 
-const Categories = ({ state: {getCategories: categories, removeCategory, addCategory}, actionDataGetter, actionDataSender}) => {
+const Categories = ({ state: {getCategories: categories, send_status}, actionGetCategories, actionRemoveCategory, actionAddCategory}) => {
     useEffect(
-        () => actionDataGetter(query.getCategories), [removeCategory, addCategory]
+        () => actionGetCategories(), [send_status]
     )
     const createCategory = () => {
         const name = prompt("Введите название категории")
         if(!name)
             return
-        actionDataSender(mutation.addCategory, {name: name})
+            actionAddCategory({name: name})
     }
     return  <Container>
         {
@@ -30,7 +29,7 @@ const Categories = ({ state: {getCategories: categories, removeCategory, addCate
         <ListGroup variant="flush" className="my-4">
             {
                categories.map(
-                   c => <Category category={c} remove={() => actionDataSender(mutation.removeCategory, {id: c.id})}/>
+                   c => <Category category={c} remove={() => actionRemoveCategory({id: c.id})}/>
                ) 
             }
         </ListGroup>
@@ -43,4 +42,4 @@ const Categories = ({ state: {getCategories: categories, removeCategory, addCate
     </Container>
 }
 
-export const APcategories = connect(state => ({state: state.promise}), {actionDataGetter, actionDataSender})(Categories)
+export const APcategories = connect(state => ({state: state.promise}), {actionGetCategories, actionRemoveCategory, actionAddCategory})(Categories)
