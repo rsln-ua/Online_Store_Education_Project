@@ -11,7 +11,6 @@ const schemas = {
         price: Number,
         img: [String],
         description: String,
-        quantity: Number,
         category: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'}
     }),
     order: new mongoose.Schema({
@@ -35,11 +34,6 @@ const schemas = {
             default: false
         },
         orders: [{type: mongoose.Schema.Types.ObjectId, ref: 'Order'}]
-    }),
-    review: new mongoose.Schema({
-        text: String,
-        user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-        good: {type: mongoose.Schema.Types.ObjectId, ref: 'Good'}
     })
 }
 
@@ -48,6 +42,5 @@ const models = {
     Good: mongoose.model('Good', schemas.good),
     User: mongoose.model('User', schemas.user),
     Order: mongoose.model('Order', schemas.order),
-    Review: mongoose.model('Review', schemas.review)
 }
 module.exports = {models}

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Form, Button, Jumbotron, Container, ButtonGroup } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { Form, Button, Jumbotron, Container, ButtonGroup } from 'react-bootstrap'
 import { actionRegister, actionAuthorize } from '../redux/actionCreater'
 
-const AuthPage = ({actionAuthorize, actionRegister}) => {
+const Page = ({actionAuthorize, actionRegister}) => {
 
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
@@ -42,4 +42,4 @@ const AuthPage = ({actionAuthorize, actionRegister}) => {
 </Container>
 )}
 
-export const CAuthPage = connect( null , {actionAuthorize, actionRegister})(AuthPage)
+export const AuthPage = connect(null, {actionAuthorize, actionRegister})(Page)

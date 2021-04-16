@@ -2,11 +2,8 @@ import React, { useState } from 'react'
 import { Form, Button, Jumbotron, Container, ButtonGroup, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { actionRegisterAdmin } from '../../redux/actionCreater'
-import { mutation } from '../../graphql'
-import { AUTHORIZED, LOGIN_FAILED } from '../../redux/action'
-import { Redirect } from 'react-router'
 
-const AuthForm = ({actionRegisterAdmin}) => {
+const Page = ({actionRegisterAdmin}) => {
 
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
@@ -38,4 +35,4 @@ const AuthForm = ({actionRegisterAdmin}) => {
 </Container>
 )}
 
-export const RegisterAdminPage = connect( state => ({state: state.promise}) ,{actionRegisterAdmin})(AuthForm)
+export const APregister = connect( state => ({state: state.promise}) ,{actionRegisterAdmin})(Page)

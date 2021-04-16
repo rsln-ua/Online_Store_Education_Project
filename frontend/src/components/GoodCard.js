@@ -4,7 +4,7 @@ import {actionAddGood2Cart} from '../redux/actionCreater'
 import { Button, Card } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
-const GoodCard = ({cart, actionAddGood2Cart, good, cN}) => {
+const Good = ({cart, actionAddGood2Cart, good, cN}) => {
     const [inCart, setInCart] = useState(0)
     useEffect(
         () => {
@@ -30,5 +30,5 @@ const GoodCard = ({cart, actionAddGood2Cart, good, cN}) => {
     )
 }
 
-export const CGoodCard = connect(state => ({cart: state.cart}), {actionAddGood2Cart})(GoodCard)
+export const GoodCard = connect(state => ({cart: state.cart}), {actionAddGood2Cart})(Good)
 

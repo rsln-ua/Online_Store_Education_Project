@@ -15,12 +15,11 @@ const Image = ({url, remove}) => {
 </Figure>
 }
 
-export const GoodForm = ({state: {getGood}, actionUpdateGood, actionGetGood, match}) => {
+export const Page = ({state: {getGood}, actionUpdateGood, actionGetGood, match}) => {
 
   const [name, setName] = useState()
   const [price, setPrice] = useState()
   const [description, setDescription] = useState()
-  const [quantity, setQuantity] = useState()
   const [images, setImages] = useState()
 
   useEffect(
@@ -31,7 +30,6 @@ export const GoodForm = ({state: {getGood}, actionUpdateGood, actionGetGood, mat
       setName(getGood?.name)
       setPrice(getGood?.price)
       setDescription(getGood?.description)
-      setQuantity(getGood?.quantity || 0)
       setImages(getGood?.img || [])
     }, [getGood]
   )
@@ -56,7 +54,7 @@ export const GoodForm = ({state: {getGood}, actionUpdateGood, actionGetGood, mat
         body: fd
       }).then(res => res.json())
     }
-    actionUpdateGood({id: getGood.id, name: name, price: +price, img: images.concat(newImages), des: description, quantity: quantity})
+    actionUpdateGood({id: getGood.id, name: name, price: +price, img: images.concat(newImages), des: description})
   }
 
 return <Container className="py-5"> 
@@ -75,10 +73,6 @@ return <Container className="py-5">
   <Form.Row>
     <Form.Group as={Col}>
         <Form.Control type={"number"} value={price} onChange={(e => setPrice(e.target.value))} placeholder="Цена"/>
-    </Form.Group>
-
-    <Form.Group as={Col}>
-      <Form.Control value={quantity} onChange={(e => setQuantity(e.target.value))} placeholder="quantity"/>
     </Form.Group>
 
     <Form.Group as={Col}>
@@ -112,4 +106,4 @@ return <Container className="py-5">
 </Container>
 }
 
-export const UpdateGoodPage = connect(state => ({state: state.promise}), {actionUpdateGood, actionGetGood})(GoodForm)
+export const APupdateGood = connect(state => ({state: state.promise}), {actionUpdateGood, actionGetGood})(Page)

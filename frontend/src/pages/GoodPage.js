@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react"
-import { Container, Carousel, Spinner, Col, Button } from "react-bootstrap"
 import { connect } from "react-redux"
-import { CPrivateRoute } from "../components"
 import { actionGetGood, actionAddGood2Cart } from "../redux/actionCreater"
-import { user, vasyaPupkin } from "../redux/authReducer"
+import { Container, Carousel, Spinner, Col, Button } from "react-bootstrap"
 
-const GoodPage = ({match, promise : {getGood: good, status}, cart, actionGetGood, actionAddGood2Cart}) => {
+const Page = ({match, promise : {getGood: good}, cart, actionGetGood, actionAddGood2Cart}) => {
     useEffect(
         () => actionGetGood(match.params), []
     )
@@ -53,7 +51,7 @@ const GoodPage = ({match, promise : {getGood: good, status}, cart, actionGetGood
                 </Col>
             </div>
         }
-        </Container>
+    </Container>
 }
 
-    export const CGoodPage = connect(state => ({promise: state.promise, cart: state.cart}), {actionGetGood, actionAddGood2Cart})(GoodPage)
+export const GoodPage = connect(state => ({promise: state.promise, cart: state.cart}), {actionGetGood, actionAddGood2Cart})(Page)

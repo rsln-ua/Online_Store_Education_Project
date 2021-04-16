@@ -1,8 +1,8 @@
-import { connect } from 'react-redux'
-import { Button, ButtonGroup, Container, ListGroup} from "react-bootstrap"
-import { Link } from "react-router-dom"
-import { actionChangeGood, actionClearCart, actionTotalPrice, actionCreateOrder} from '../redux/actionCreater'
 import { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { Link } from "react-router-dom"
+import { Button, ButtonGroup, Container, ListGroup} from "react-bootstrap"
+import { actionChangeGood, actionClearCart, actionTotalPrice, actionCreateOrder} from '../redux/actionCreater'
 
 const Counter = ({id, count, actionChangeGood}) =>{
     const setCount = (count) => actionChangeGood(id, count) 
@@ -15,7 +15,7 @@ const Counter = ({id, count, actionChangeGood}) =>{
 
 const CCounter = connect(null, {actionChangeGood})(Counter)
 
-const GoodLi = ({good}) => 
+const Good = ({good}) => 
 <ListGroup.Item action className="d-flex justify-content-between good-p">
     <Link to={`/good/${good.id}`}>
         {
@@ -29,14 +29,13 @@ const GoodLi = ({good}) =>
 </ListGroup.Item>
 
 
-const CartPage = ({cart, promise, actionClearCart, actionCreateOrder, actionTotalPrice}) =>{
+const Page = ({cart, promise, actionClearCart, actionCreateOrder, actionTotalPrice}) =>{
     useEffect(
         () => actionTotalPrice({goods: JSON.stringify(cart.goods)}), [cart]
     )
     const handlerCreateOrder = () => {
         if(!cart.goods){
-            alert('Корзина пустая!!')
-            return
+            return alert('Корзина пустая!!')
         }
         const goods = JSON.stringify(cart.goods)
         actionCreateOrder({goods: goods})
@@ -45,7 +44,7 @@ const CartPage = ({cart, promise, actionClearCart, actionCreateOrder, actionTota
         <Container>
             <ListGroup className="py-5">
                 {
-                    cart.goods?.map(g => <GoodLi good={g}/>)
+                    cart.goods?.map(g => <Good good={g}/>)
                 }
             </ListGroup>
             <div className="d-flex justify-content-between">
@@ -60,4 +59,4 @@ const CartPage = ({cart, promise, actionClearCart, actionCreateOrder, actionTota
     )
 }
 
-export const CCartPage = connect(state => ({cart: state.cart, promise: state.promise}),{actionClearCart, actionCreateOrder, actionTotalPrice})(CartPage)
+export const CartPage = connect(state => ({cart: state.cart, promise: state.promise}),{actionClearCart, actionCreateOrder, actionTotalPrice})(Page)

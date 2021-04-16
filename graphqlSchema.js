@@ -3,7 +3,7 @@ const { buildSchema } = require('graphql')
 
 module.exports = buildSchema(`
 type Query {
-    getGoods(id: String, name: String, price: Int, quantity: Int, category: String) : [Good]
+    getGoods(id: String, name: String, price: Int, category: String) : [Good]
     getGood(id: String!) : Good
     getCategories : [Category]
     getUsers : [User]
@@ -21,7 +21,7 @@ type Mutation {
     registerAdmin(login: String!, password: String!) : String
     register(login: String!, password: String!) : String
     createOrder(goods: String) : Order
-    updateGood(id: String!, name: String!, price: Int!, img: [String], description: String, quantity: Int) : Good
+    updateGood(id: String!, name: String!, price: Int!, img: [String], description: String) : Good
     addGood2Cart(id: String!) : GoodOrder
     removeCategory(id: String!) : String
     removeGood(id: String!) : String
@@ -37,7 +37,6 @@ type Good {
     price: Int
     img: [String]
     description: String
-    quantity: Int
     category: Category
 }
 type User {

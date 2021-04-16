@@ -1,4 +1,4 @@
-import {CHANGE_GOOD, ADD_GOOD, CLEAR_CART, REMOVE_GOOD, RESOLVED} from "./action"
+import {CHANGE_GOOD, ADD_GOOD, CLEAR_CART, REMOVE_GOOD} from "./action"
 
 export default function(state={}, {type, id, count=1, data}){
 

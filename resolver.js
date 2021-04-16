@@ -123,7 +123,7 @@ const root = {
         const order = new models.Order({
             user: user._id,
             goods: goods,
-            total: total,          //goods.reduce((total, obj) => (total + obj.price * obj.count), 0),
+            total: total,          
             created: new Date()
         })
 

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
-import { Container, Table } from "react-bootstrap"
 import { connect } from "react-redux"
 import { actionGetOrder } from "../redux/actionCreater"
+import { Container, Table } from "react-bootstrap"
 
 const GoodTr = ({good}) =>
 <tr>
@@ -10,7 +10,7 @@ const GoodTr = ({good}) =>
     <td>{good.price}</td>
 </tr>
 
-const OrderPage = ({state: {getOrder: order}, actionGetOrder, match}) => {
+const Page = ({state: {getOrder: order}, actionGetOrder, match}) => {
 
     useEffect(
         () => actionGetOrder(match.params), []
@@ -34,4 +34,4 @@ const OrderPage = ({state: {getOrder: order}, actionGetOrder, match}) => {
     </Container>
 }
 
-export const COrderPage = connect(state => ({state: state.promise}), {actionGetOrder})(OrderPage)
+export const OrderPage = connect(state => ({state: state.promise}), {actionGetOrder})(Page)

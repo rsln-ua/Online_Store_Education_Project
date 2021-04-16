@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom";
-import { Container, Table, Alert } from "react-bootstrap"
 import { connect } from "react-redux"
 import { actionGetUser } from "../redux/actionCreater"
+import { Container, Table, Alert } from "react-bootstrap"
 
 const Order = ({order}) =>
 <tr>
@@ -11,7 +11,7 @@ const Order = ({order}) =>
     <td>{(new Date(+order.created)).toLocaleDateString()}</td>
 </tr>
 
-const UserOrdersPage = ({ state: {getUser: orders}, actionGetUser }) => {
+const Page = ({ state: {getUser: orders}, actionGetUser }) => {
     useEffect(
         () => actionGetUser(), []
     )
@@ -33,10 +33,10 @@ const UserOrdersPage = ({ state: {getUser: orders}, actionGetUser }) => {
              </tbody>
          </Table>
          :
-         <Alert variant="warning">Здесь пока ничего нет, сделайте заказ</Alert>
+         <Alert variant="warning">Здесь пока ничего нет, сделайте заказ.</Alert>
         }
      </Container>
 }
 
 
-export const CUserOrdersPage = connect(state => ({state: state.promise}), {actionGetUser})(UserOrdersPage)
+export const UserOrdersPage = connect(state => ({state: state.promise}), {actionGetUser})(Page)

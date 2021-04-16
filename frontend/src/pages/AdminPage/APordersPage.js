@@ -13,7 +13,7 @@ const Order = ({order}) =>
     <td>{(new Date(+order.created)).toLocaleDateString()}</td>
 </tr>
 
-const OrdersPage = ({ state: {getOrders: orders}, actionGetOrders }) => {
+const Page = ({ state: {getOrders: orders}, actionGetOrders }) => {
     useEffect(
         () => actionGetOrders(query.getOrders), []
     )
@@ -42,4 +42,4 @@ const OrdersPage = ({ state: {getOrders: orders}, actionGetOrders }) => {
     </Container>
 }
 
-export const COrdersPage = connect(state => ({state: state.promise}), {actionGetOrders})(OrdersPage)
+export const APordersPage = connect(state => ({state: state.promise}), {actionGetOrders})(Page)

@@ -41,7 +41,7 @@ return <>
 
 const CUserOptions = connect(state => ({state: state.auth}), {logout: actionLogout})(UserOptions)
 
-const Header = () =>
+const UserHeader = () =>
 <header>
   <Navbar bg="dark" expand="md" variant="dark">
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -62,4 +62,4 @@ const Header = () =>
 </Navbar> 
 </header>
 
-export const CHeader = connect(null, {logout: actionLogout})(Header)
+export const Header = connect(null, {logout: actionLogout})(UserHeader)

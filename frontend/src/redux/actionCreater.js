@@ -1,65 +1,7 @@
+import {ADD_GOOD, CLEAR_CART, REMOVE_GOOD, CHANGE_GOOD, PENDING, RESOLVED, REJECTED, LOGIN, LOGOUT, SEND_PENDING, SEND_RESOLVED, SEND_REJECTED} from './action'
 import { mutation, query } from '../graphql'
-import {ADD_GOOD, CLEAR_CART, REMOVE_GOOD, CHANGE_GOOD, PENDING, RESOLVED, REJECTED, LOGIN, LOGOUT, LOGIN_FAILED, SEND_PENDING, SEND_RESOLVED, SEND_REJECTED} from './action'
 import {myFetch} from '../myFetch'
 import {history} from '../index'
-
-export const actionAddGoodToCart = (id, data) =>({type: ADD_GOOD, data, id})
-export const actionChangeGood = (id, count) => {
-  if(count <= 0)
-  return {type: REMOVE_GOOD, id}
-
-  return {type: CHANGE_GOOD, id, count}
-}
-export const actionClearCart = () => ({type: CLEAR_CART})
-  
-export const actionAddGood2Cart = (id) =>
-dispatch =>{
-    try{
-    myFetch(mutation.addGood2Cart, {id})
-    .then(q => dispatch(actionAddGoodToCart(id, q.data)))
-  }catch(e){
-    console.error(e)
-  }
-}
-
-// export const actionDataSender = (query, variables, resCb, rejCb) => 
-//   async dispatch =>{
-//     try{
-//       dispatch(actionSendPending())
-//       let {data} = await myFetch(query, variables)
-
-//       // console.log(data)
-
-//       dispatch(actionSendResolved(data))
-
-//       resCb && resCb(data)
-//     }catch(e){
-//       console.error(e)
-
-//       dispatch(actionSendRejected())
-//       rejCb && rejCb(e)
-//     }
-//   }
-
-export const actionDataSender = (query, variables, resCb, rejCb) => 
-  async dispatch =>{
-    try{
-      dispatch(actionSendPending())
-      let {data} = await myFetch(query, variables)
-
-      // console.log(data)
-
-      dispatch(actionSendResolved(data))
-
-      resCb && resCb(data)
-    }catch(e){
-      console.error(e)
-
-      dispatch(actionSendRejected())
-      rejCb && rejCb(e)
-    }
-  }
-
 
 export const actionPending = () => ({type: PENDING})
 export const actionResolved = (data) => ({type: RESOLVED, data})
@@ -69,21 +11,66 @@ export const actionSendPending = () => ({type: SEND_PENDING})
 export const actionSendResolved = (data) => ({type: SEND_RESOLVED, data})
 export const actionSendRejected = (e) => ({type: SEND_REJECTED, error: e})
 
+
+export const actionAddGoodToCart = (id, data) => ({type: ADD_GOOD, data, id})
+export const actionChangeGood = (id, count) => count <= 0 ? ({type: REMOVE_GOOD, id}) : ({type: CHANGE_GOOD, id, count})
+export const actionClearCart = () => ({type: CLEAR_CART})
+
+
+export const actionLogin = (data) => ({type: LOGIN, data: data})
+export const actionLogout = () => ({type: LOGOUT})
+
 export const actionDataGetter = (query, variables) => 
   async dispatch => {
     try{
       dispatch(actionPending())
       const {data} = await myFetch(query, variables)
-      // console.log(data)
       dispatch(actionResolved(data))
     }catch(e){
       dispatch(actionRejected())
     }
   }
 
-export const actionLogin = (data) => ({type: LOGIN, data: data})
+export const actionGetCategories = () =>
+async dispatch => dispatch(actionDataGetter(query.getCategories))
 
-export const actionLogout = () => ({type: LOGOUT})
+export const actionGetGoods = () =>
+async dispatch => dispatch(actionDataGetter(query.getGoods))
+
+export const actionTotalPrice = (variables) =>
+async dispatch => dispatch(actionDataGetter(query.totalPrice, variables))
+
+export const actionGetGoodsByCategory = (variables) =>
+async dispatch => dispatch(actionDataGetter(query.getCategoryById, variables))
+
+export const actionGetUser = () =>
+async dispatch => dispatch(actionDataGetter(query.getUser))
+
+export const actionGetUserById = (variables) =>
+async dispatch => dispatch(actionDataGetter(query.getUserById, variables))
+
+export const actionGetGood = (variables) =>
+async dispatch => dispatch(actionDataGetter(query.getGood, variables))
+
+export const actionGetOrder = (variables) =>
+async dispatch => dispatch(actionDataGetter(query.getOrder, variables))
+
+export const actionGetOrders = () =>
+async dispatch => dispatch(actionDataGetter(query.getOrders))
+
+
+
+export const actionAddGood2Cart = (id) =>
+async dispatch =>{
+    try{
+      dispatch(actionSendPending())
+      const {data} = await myFetch(mutation.addGood2Cart, {id})
+      dispatch(actionSendResolved())
+      dispatch(actionAddGoodToCart(id, data))
+    }catch(e){
+        dispatch(actionRejected(e))
+    }
+  }
 
 export const actionRegister = (variables) => 
   async dispatch => {
@@ -167,9 +154,6 @@ export const actionAddCategory = (variables) =>
     }
   }
 
-export const actionGetCategories = () =>
-  async dispatch => dispatch(actionDataGetter(query.getCategories))
-
 export const actionRemoveGood = (variables) =>
   async dispatch => {
     try{
@@ -192,29 +176,3 @@ async dispatch => {
     dispatch(actionSendRejected(e))
   }
 }
-
-
-export const actionGetGoods = () =>
-async dispatch => dispatch(actionDataGetter(query.getGoods))
-
-export const actionTotalPrice = (variables) =>
-async dispatch => dispatch(actionDataGetter(query.totalPrice, variables))
-
-export const actionGetGoodsByCategory = (variables) =>
-async dispatch => dispatch(actionDataGetter(query.getCategoryById, variables))
-
-export const actionGetUser = () =>
-async dispatch => dispatch(actionDataGetter(query.getUser))
-
-export const actionGetUserById = (variables) =>
-async dispatch => dispatch(actionDataGetter(query.getUserById, variables))
-
-export const actionGetGood = (variables) =>
-async dispatch => dispatch(actionDataGetter(query.getGood, variables))
-
-export const actionGetOrder = (variables) =>
-async dispatch => dispatch(actionDataGetter(query.getOrder, variables))
-
-export const actionGetOrders = () =>
-async dispatch => dispatch(actionDataGetter(query.getOrders))
-

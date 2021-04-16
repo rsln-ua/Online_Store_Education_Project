@@ -1,7 +1,7 @@
 export const query = {
   getGoods: `query {
             getGoods{
-            id name price quantity category {id}
+            id name price category {id}
             }}`,
   getUser: `query{
     getUser{
@@ -83,8 +83,8 @@ export const mutation = {
     id
     }
   }`,
-  updateGood: `mutation update($id: String!, $name: String!, $price: Int!, $img: [String], $des: String, $quantity: Int){
-    updateGood(id: $id, name: $name, price: $price, img: $img, description: $des, quantity: $quantity){
+  updateGood: `mutation update($id: String!, $name: String!, $price: Int!, $img: [String], $des: String){
+    updateGood(id: $id, name: $name, price: $price, img: $img, description: $des){
       id
     }
   }`,

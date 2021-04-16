@@ -1,4 +1,4 @@
-import { LOGIN, LOGIN_FAILED, LOGOUT, AUTHORIZED } from "./action"
+import { LOGIN, LOGOUT } from "./action"
 
 export const admin = "admin"
 export const user = "user"
@@ -9,7 +9,7 @@ export default function(state, {type, data={}}){
 
    if(state == undefined && localStorage.token){
         type = LOGIN
-   }
+    }
 
     if(type == LOGIN){
 
@@ -21,7 +21,7 @@ export default function(state, {type, data={}}){
 
         const role = JSON.parse(atob(localStorage.token.split('.')[1])).sub.role
 
-        return {...state, role: role, status: AUTHORIZED}
+        return {...state, role: role}
     }
 
     if(type == LOGOUT){
@@ -29,10 +29,6 @@ export default function(state, {type, data={}}){
         localStorage.token = ''
 
         return {}
-    }
-
-    if(type == LOGIN_FAILED){
-        return {status: LOGIN_FAILED}
     }
 
     return state || {}

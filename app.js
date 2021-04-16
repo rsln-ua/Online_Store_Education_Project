@@ -20,7 +20,7 @@ async function verifyReq(req){
 
             }
             catch(e){
-                console.log('catch')
+                console.log(e)
             }
         }
     }
@@ -36,10 +36,6 @@ app.use('/graphql', express_graphql(async(req, res) => ({
 })))
 
 app.use(express.json())
-
-app.get('/', (req, res) => {
-    res.send(JSON.stringify('start'))
-})
 
 const upload = multer({dest: __dirname + "/public/images"})
 

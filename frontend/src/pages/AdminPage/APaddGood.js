@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { Container, FormControl, InputGroup, Form, Col, Figure, Button } from "react-bootstrap"
+import { Container, FormControl, InputGroup, Form, Col, Button } from "react-bootstrap"
 import { connect } from "react-redux"
 import { actionGetCategories, actionAddGood } from "../../redux/actionCreater"
 
@@ -19,7 +19,7 @@ const ListCategories = ({state: {getCategories: categories}, actionGetCategories
 
 const CListCategories = connect(state => ({state: state.promise}), {actionGetCategories})(ListCategories)
 
-export const TAddGoodPage = ({actionAddGood}) => {
+const Page = ({actionAddGood}) => {
 
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
@@ -86,4 +86,4 @@ return <Container className="py-5">
 </Container>
 }
 
-export const AddGoodPage = connect(state => ({state: state.promise}), {actionAddGood})(TAddGoodPage)
+export const APaddGood = connect(state => ({state: state.promise}), {actionAddGood})(Page)

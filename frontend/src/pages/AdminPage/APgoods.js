@@ -20,7 +20,7 @@ const GoodItem = ({good, remove}) => {
     </ListGroup.Item>
 }
 
-const CAPGoods = ({state:{getGoods: goods, removeGood}, actionGetGoods, actionRemoveGood}) => {
+const Page = ({state:{getGoods: goods, removeGood}, actionGetGoods, actionRemoveGood}) => {
     useEffect(
         () => actionGetGoods(), [removeGood]
     )
@@ -36,4 +36,4 @@ const CAPGoods = ({state:{getGoods: goods, removeGood}, actionGetGoods, actionRe
 }
 
 
-export const APGoods = connect(state => ({state: state.promise}), {actionGetGoods, actionRemoveGood})(CAPGoods)
+export const APgoods = connect(state => ({state: state.promise}), {actionGetGoods, actionRemoveGood})(Page)

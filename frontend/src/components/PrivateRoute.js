@@ -6,7 +6,6 @@ import { actionLogin } from "../redux/actionCreater"
 
 const PrivateRoute = ({state, roles, actionLogin, component: Component, ...rest }) => {
 
-    // const role = state.role || (localStorage.token && JSON.parse(atob(localStorage.token.split('.')[1])).sub.role) || vasyaPupkin
     const role = state.role || vasyaPupkin
 
     return <Route {...rest} render={(props) => (

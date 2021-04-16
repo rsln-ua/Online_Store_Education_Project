@@ -13,7 +13,7 @@ const Category = ({category, remove}) =>
   </ListGroup.Item>
 </tr>
 
-const Categories = ({ state: {getCategories: categories, send_status}, actionGetCategories, actionRemoveCategory, actionAddCategory}) => {
+const Page = ({ state: {getCategories: categories, send_status}, actionGetCategories, actionRemoveCategory, actionAddCategory}) => {
     useEffect(
         () => actionGetCategories(), [send_status]
     )
@@ -42,4 +42,4 @@ const Categories = ({ state: {getCategories: categories, send_status}, actionGet
     </Container>
 }
 
-export const APcategories = connect(state => ({state: state.promise}), {actionGetCategories, actionRemoveCategory, actionAddCategory})(Categories)
+export const APcategories = connect(state => ({state: state.promise}), {actionGetCategories, actionRemoveCategory, actionAddCategory})(Page)
