@@ -25,18 +25,19 @@ const Page = ({actionAddGood}) => {
   const [price, setPrice] = useState('')
   const [category, setCategory] = useState('')
   const [description, setDescription] = useState('')
+  const inpRef = useRef(null)
 
   const sendGood = async () => {
 
     let images
 
-    if(!test.files)
+    if(!inpRef.current.files)
       images = []
     else
     {
       const fd = new FormData()
       
-      for(let i of test.files){
+      for(let i of inpRef.current.files){
             fd.append('img', i)
       }
 
@@ -77,7 +78,7 @@ return <Container className="py-5">
     <FormControl as="textarea" aria-label="With textarea" value={description} onChange={(e => setDescription(e.target.value))}/>
   </InputGroup>
 
-  <Form.File multiple accept=".png, .jpg, .jpeg" id="test" label="" name="img"/>
+  <Form.File multiple accept=".png, .jpg, .jpeg" ref={inpRef} label="" name="img"/>
 
   <div className="d-flex justify-content-end">
     <Button onClick={sendGood}  disabled={name === "" || price === "" || category === ""} >Отправить</Button>

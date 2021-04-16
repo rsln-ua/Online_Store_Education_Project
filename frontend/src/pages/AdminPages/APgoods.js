@@ -7,12 +7,11 @@ import { actionGetGoods, actionRemoveGood } from "../../redux/actionCreater";
 const GoodItem = ({good, remove}) => {
     return <ListGroup.Item>
         <div className="position-relative overflow-hidden">
-            <ButtonGroup className="position-absolute top-0 bottom-0 end-0">
-                <Button variant="primary" as={Link} to={`/admin/updateGood/${good.id}`}>Изменить</Button>
-                <Button variant="danger" onClick={remove}>Удалить</Button>
-            </ButtonGroup>
+
+            <Button className="position-absolute top-0 bottom-0 end-0" variant="danger" onClick={() => window.confirm(`Вы уверены что хотите удалить товар: ${good.name}`) && remove()}>Удалить</Button>
+
             <h4 className="overflow-scroll">
-                <Link to={`/good/${good.id}`} className="text-nowrap">
+                <Link to={`/admin/updateGood/${good.id}`} className="text-nowrap">
                     {good.name}
                 </Link>                
             </h4>
@@ -20,9 +19,9 @@ const GoodItem = ({good, remove}) => {
     </ListGroup.Item>
 }
 
-const Page = ({state:{getGoods: goods, removeGood}, actionGetGoods, actionRemoveGood}) => {
+const Page = ({state:{getGoods: goods, send_status}, actionGetGoods, actionRemoveGood}) => {
     useEffect(
-        () => actionGetGoods(), [removeGood]
+        () => actionGetGoods(), [send_status]
     )
     return <Container>
         <ListGroup>

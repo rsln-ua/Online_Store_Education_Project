@@ -29,7 +29,7 @@ const Page = ({ state: {getCategories: categories, send_status}, actionGetCatego
         <ListGroup variant="flush" className="my-4">
             {
                categories.map(
-                   c => <Category category={c} remove={() => actionRemoveCategory({id: c.id})}/>
+                   c => <Category category={c} remove={() => window.confirm(`Вы уверены что хотите удалить категорию: ${c.name}`) && actionRemoveCategory({id: c.id})}/>
                ) 
             }
         </ListGroup>

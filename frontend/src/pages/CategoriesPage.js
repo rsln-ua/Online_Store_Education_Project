@@ -12,7 +12,6 @@ const colors = [
     'Danger',
     'Warning',
     'Info',
-    'Light',
     'Dark',
   ]
 
@@ -20,7 +19,6 @@ const Category = ({category, color = ''}) => {
     return(
         <Card
             bg={color.toLowerCase()}
-            text={color.toLowerCase() === 'light' ? 'dark' : 'white'}
             className="category-card"
         >
             <Card.Header>
@@ -49,7 +47,7 @@ const Page = ({state: {getCategories: categories}, actionGetCategories}) => {
                 {
                     categories?.map(el => <Category category={el} color={
                         (function(){
-                            if(i > colors.length)
+                            if(i === colors.length)
                             i = 0
                             return colors[i++]}
                         )()

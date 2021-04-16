@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { PENDING } from './redux/action';
 import { Spinner } from 'react-bootstrap';
 import { CategoriesPage, CategoryGoodsPage, GoodPage, CartPage, AuthPage, UserOrdersPage, OrderPage } from './pages'
-import { APordersPage, APaddGood, APupdateGood, APregister, APuserPage, APcategories, APgoods } from './pages/AdminPage'
+import { APordersPage, APaddGood, APupdateGood, APregister, APuserPage, APcategories, APgoods } from './pages/AdminPages'
 import {user, admin, vasyaPupkin} from "./redux/authReducer"
 
 
@@ -54,7 +54,7 @@ function App({state: {status}}) {
             <CPrivateRoute path="/" roles={[user, vasyaPupkin]} exact component={CategoriesPage}/>
             <Redirect from="/categories" to="/"/>
             <CPrivateRoute path="/category/:id" roles={[user, vasyaPupkin]} component={CategoryGoodsPage}/>
-            <Route path="/good/:id" component={GoodPage}/>
+            <CPrivateRoute path="/good/:id" roles={[user, vasyaPupkin]} component={GoodPage}/>
             <CPrivateRoute path="/user/:id" roles={[admin]} component={APuserPage}/>
             <CPrivateRoute path="/authorize" roles={[vasyaPupkin]} component={AuthPage}/>
             <CPrivateRoute path="/cart" roles={[user, vasyaPupkin]} component={CartPage}/>

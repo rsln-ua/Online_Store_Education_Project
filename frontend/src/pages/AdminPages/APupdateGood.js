@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Container, FormControl, InputGroup, Form, Col, Button, Figure } from "react-bootstrap"
 import { connect } from "react-redux"
 import { history } from "../../index"
@@ -21,6 +21,7 @@ export const Page = ({state: {getGood}, actionUpdateGood, actionGetGood, match})
   const [price, setPrice] = useState()
   const [description, setDescription] = useState()
   const [images, setImages] = useState()
+  const inpRef = useRef(null)
 
   useEffect(
     () => actionGetGood(match.params), []
@@ -38,13 +39,13 @@ export const Page = ({state: {getGood}, actionUpdateGood, actionGetGood, match})
 
     let newImages
 
-    if(!test.files)
+    if(!inpRef.current.files)
       newImages = []
     else
     {
       const fd = new FormData()
       
-      for(let i of test.files){
+      for(let i of inpRef.current.files){
             fd.append('img', i)
       }
 
@@ -88,7 +89,7 @@ return <Container className="py-5">
     <FormControl as="textarea" aria-label="With textarea" value={description} onChange={(e => setDescription(e.target.value))}/>
   </InputGroup>
 
-  <Form.File multiple accept=".png, .jpg, .jpeg" id="test" label="" name="img"/>
+  <Form.File multiple accept=".png, .jpg, .jpeg" ref={inpRef} label="" name="img"/>
   <div className="p-2">
     {
       images?.map(

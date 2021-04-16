@@ -17,7 +17,6 @@ const Page = ({ state: {getOrders: orders}, actionGetOrders }) => {
     useEffect(
         () => actionGetOrders(query.getOrders), []
     )
-    console.log(orders)
     return  <Container >
         {
         orders && orders.length != 0  ?
