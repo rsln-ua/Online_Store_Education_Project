@@ -46,6 +46,10 @@ const root = {
         if(!user || !user.isAdmin)
         throw new Error('Гуляй Вася.')
 
+        const category = await models.Category.findOne(obj)
+        if(category)
+        throw new Error('Такая категория уже есть.')
+
         let newCategory = new models.Category(obj)
         await newCategory.save()
         return newCategory
